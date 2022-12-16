@@ -32,7 +32,8 @@ describe('home/landing page', () => {
   })
 
   it('can update a product', () => {
-    // ? how can we check that we have updated the product successfully?
+    cy.contains('Products').click()
+    cy.contains('Edit').click()
   })
 
   it('can delete a product', () => {
