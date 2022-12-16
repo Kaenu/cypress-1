@@ -1,4 +1,5 @@
-var loginOverlay = document.getElementById("login-overlay");
+var loginOverlay = document.querySelector("#login-overlay");
+var loginStatus = document.querySelector("#login-status");
 
 var usernameField = document.getElementById("username-field");
 var passwordField = document.getElementById("password-field");
@@ -17,8 +18,27 @@ function authenticate(event) {
 	});
 }
 
+loginStatus.updateButtonText = function (newText) {
+	this.innerText = newText;
+}
+loginStatus.addEventListener('click', function (e) {
+	if (this.innerText === 'Log In') {
+		e.preventDefault();
+		loginOverlay.show();
+	}
+})
+
+loginOverlay.show = function () {
+	this.classList.add('visible');
+}
+loginOverlay.hide = function () {
+	this.classList.remove('visible');
+}
+
 function onLoginSuccess(request) {
-	loginOverlay.classList.remove("visible");
+	loginStatus.updateButtonText('Log Out');
+	loginStatus.href = 'logout.php';
+	loginOverlay.hide();
 }
 
 function onLoginError(request) {

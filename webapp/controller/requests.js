@@ -38,9 +38,7 @@ function onReadyStateChange(event) {
 	//Show the login overlay if the response code is 401.
 	//Will also call the error callback.
 	if (finishedRequest.status == 401) {
-		if (loginOverlay.className.indexOf("visible") == -1) {
-			loginOverlay.classList.add("visible");
-		}
+		loginOverlay.show();
 	}
 
 	//Call the error callback if the response code is not 200 or 201.
@@ -51,5 +49,9 @@ function onReadyStateChange(event) {
 	}
 
 	//If we arrive here, all went right and therefore we call the success callback.
+	if(loginStatus) {
+		loginStatus.href = 'logout.php';
+		loginStatus.updateButtonText('Log Out');
+	}
 	currentSuccessCallback(finishedRequest);
 }

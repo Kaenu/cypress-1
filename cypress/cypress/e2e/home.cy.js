@@ -1,6 +1,22 @@
 /// <reference types="Cypress" />
 
-describe('home/landing page', () => {
+const createRandomString = function () {
+  return self?.crypto?.randomUUID() ?? Math.random() * 100000;
+}
+
+const createAProduct = () => {
+  const name = createRandomString();
+  cy.visit('localhost/product.php')
+  cy.get('input#name-field').type(name)
+  cy.get('input#sku-field').type(name)
+  cy.get('input#price-field').type('420.00')
+  cy.get('input#stock-field').type('10')
+  cy.contains('Save and Close').click()
+
+  return name
+}
+
+describe('shop app if signed sign', () => {
   beforeEach(() => {
     cy.visit('http://localhost')
     cy.contains('Categories').click()
@@ -31,15 +47,35 @@ describe('home/landing page', () => {
     cy.contains('Save and Close').click()
   })
 
+  // ! HOMEWORK BELOW:
+  // Please complete the following tests by Friday so we can look at the solutions together
+  
   it('can update a product', () => {
+<<<<<<< HEAD
     cy.contains('Products').click()
     cy.contains('Edit').click()
+=======
+    // ? how can we check that we have updated the product successfully?
+    const randomProductName = self?.crypto?.randomUUID() ?? Math.random() * 100000;
+    cy.get('body').should('not.contain.text', randomProductName);
+    cy.contains('Products').click()
+    cy.contains('Edit').eq(0).click()
+    cy.get('input#name-field').clear().type(randomProductName)
+    cy.contains('Save and Close').click()
+    cy.get('body').should('contain.text', randomProductName)
+>>>>>>> ddc324a4887c32b37c692e8c9a9aa85c2264097b
   })
-
+  
   it('can delete a product', () => {
-    // ? how can we check that we have deleted the product successfully
+    // ? what is the issue with this test?
+    const productName = createAProduct()
+    cy.contains(productName).parent().contains('Delete').click()
+    cy.get('body').should('not.contain.text', productName)
   })
 
-  it('shows the login button if we are logged out')
-  it('shows the logout button if we are logged in')
+  // * These work exactly the same way as the tests for products
+  it('lists the categories', () => {})
+  it('can create a category', () => {})
+  it('can update a category', () => {})
+  it('can delete a category', () => {})
 })
